@@ -1,1 +1,1 @@
-export const BACKEND_URL = (process.env.NEXT_PUBLIC_URL_PRE || 'https://boazkaufman.pythonanywhere.com');
+export const BACKEND_URL = (process.env.NEXT_PUBLIC_URL_PRE || 'https://127.0.0.1:8000');
