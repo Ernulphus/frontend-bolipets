@@ -8,9 +8,8 @@ import style from './Pets.module.css';
  
 import { BACKEND_URL } from '@/app/constants.js';
 
-const PEOPLE_READ_ENDPOINT = `${BACKEND_URL}/people`;
-const PEOPLE_CREATE_ENDPOINT = `${BACKEND_URL}/people/create`;
-const ROLES_ENDPOINT = `${BACKEND_URL}/roles`;
+const PETS_READ_ENDPOINT = `${BACKEND_URL}/Pets/read`;
+const PETS_CREATE_ENDPOINT = `${BACKEND_URL}/Pets/create`;
 
 type HTMLINPUTEVENT = React.ChangeEvent<HTMLInputElement>;
 type HTMLSELECTEVENT = React.ChangeEvent<HTMLSelectElement>
@@ -39,7 +38,7 @@ function AddPetForm(props: AddPetFormProps) {
       roles: role,
       affiliation: '',
     }
-    axios.put(PEOPLE_CREATE_ENDPOINT, newPet)
+    axios.put(PETS_CREATE_ENDPOINT, newPet)
       .then(fetchPets)
       .catch((error) => { setError(`There was a problem adding the pet. ${error}`); });
   };
@@ -93,52 +92,61 @@ interface ErrorMessageProps {
 
 function Pet(props: PetProps) {
   const {
+    key,
     pet,
     fetchPets,
     roleMap,
    } = props;
-  const { name, email, roles } = pet;
+  const { Name, color, eye, hunger, mood } = pet;
 
   const deletePet = () => {
-    axios.delete(`${PEOPLE_READ_ENDPOINT}/${email}`)
+    axios.delete(`${PETS_READ_ENDPOINT}/${email}`)
       .then(fetchPets)
   }
 
   return (
-    <div>
-      <Link href={email}>
-        <div className={style.pet_container}>
-          <h2>{name}</h2>
-          <p>
-            Email: {email}
-          </p>
-          <ul>
-            Roles: {roles.map((role) => (<li key={role}>{ roleMap[role] }</li>))}
-          </ul>
-        </div>
-      </Link>
+    <div key={key}>
+      <div className={style.pet_container}>
+        <h2>{Name}</h2>
+        <p>
+          Color: {color}
+        </p>
+        <p>
+          Eye: {eye}
+        </p>
+        <p>
+          Hunger: {hunger}
+        </p>
+        <p>
+          Mood: {mood}
+        </p>
+      </div>
       <button onClick={deletePet}>Delete pet</button>
     </div>
   );
 }
 
 interface Pet {
-  name: string,
-  email: string,
-  roles: string[],
+  Name: string,
+  color: string,
+  eye: string,
+  hunger: number
+  mood: number,
+  _id: string,
 }
 
 interface PetProps {
+  key?: string,
   pet: Pet,
   fetchPets: () => void,
   roleMap: { [key: string]: string }
 }
 
-interface peopleObject {
+interface petObject {
   [key: string]: Pet
 }
 
-function peopleObjectToArray(Data: peopleObject) {
+function peopleObjectToArray(Data: petObject) {
   const keys = Object.keys(Data);
   const people = keys.map((key) => Data[key]);
   return people;
@@ -151,32 +159,25 @@ interface receivedData {
 
 function Pets() {
   const [error, setError] = useState('');
-  const [people, setPets] = useState([] as Pet[]);
+  const [pets, setPets] = useState([] as Pet[]);
   const [addingPet, setAddingPet] = useState(false);
   const [roleMap, setRoleMap] = useState({});
 
 
   const fetchPets = () => {
-    axios.get(PEOPLE_READ_ENDPOINT)
+    axios.get(PETS_READ_ENDPOINT)
       .then(
         ({ data }: receivedData) => { setPets(peopleObjectToArray(data)) }
     )
       .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
   };
 
-  const getRoles = () => {
-    axios.get(ROLES_ENDPOINT)
-      .then(({ data }: receivedData) => setRoleMap(data))
-      .catch((error: string) => { setError(`There was a problem getting roles. ${error}`); });
-  }
-
   const showAddPetForm = () => { setAddingPet(true); };
   const hideAddPetForm = () => { setAddingPet(false); };
 
   useEffect(fetchPets, []);
-  useEffect(getRoles, []);
 
-
+  console.log(pets);
   return (
     <div className="wrapper">
       <header>
@@ -196,9 +197,9 @@ function Pets() {
       />
       {error && <ErrorMessage message={error} />}
       {
-      people.map((pet) => 
+      pets.map((pet) => 
         (<Pet
-          key={pet.email}
+          key={pet['_id']}
           pet={pet}
           fetchPets={fetchPets}
           roleMap={roleMap}
