@@ -6,10 +6,10 @@ import Link from "next/link";
 
 import style from './Pets.module.css';
  
-import { BACKEND_URL } from '@/app/constants.js';
+import { epGroups, getURL, methods } from '@/app/utils/networkutils';
 
-const PETS_READ_ENDPOINT = `${BACKEND_URL}/Pets/read`;
-const PETS_CREATE_ENDPOINT = `${BACKEND_URL}/Pets/create`;
+const PETS_READ_ENDPOINT = getURL(epGroups.PETS, methods.READ);
+const PETS_CREATE_ENDPOINT = getURL(epGroups.PETS, methods.CREATE);
 
 type HTMLINPUTEVENT = React.ChangeEvent<HTMLInputElement>;
 type HTMLSELECTEVENT = React.ChangeEvent<HTMLSelectElement>
