@@ -92,7 +92,7 @@ interface ErrorMessageProps {
 
 function Pet(props: PetProps) {
   const {
-    key,
+    petKey: key,
     pet,
     fetchPets,
     roleMap,
@@ -136,7 +136,7 @@ interface Pet {
 }
 
 interface PetProps {
-  key?: string,
+  petKey?: string,
   pet: Pet,
   fetchPets: () => void,
   roleMap: { [key: string]: string }
@@ -199,7 +199,7 @@ function Pets() {
       {
       pets.map((pet) => 
         (<Pet
-          key={pet['_id']}
+          petKey={pet['_id']}
           pet={pet}
           fetchPets={fetchPets}
           roleMap={roleMap}
