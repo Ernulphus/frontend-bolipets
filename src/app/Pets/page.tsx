@@ -180,9 +180,11 @@ function Pets() {
         <h1>
           View All Pets
         </h1>
-        <button type="button" onClick={showAddPetForm}>
-          Add a Pet
-        </button>
+        <Link href="CreatePet">
+          <button type="button">
+            Add a Pet
+          </button>
+        </Link>
       </header>
       <AddPetForm
         visible={addingPet}

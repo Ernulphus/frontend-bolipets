@@ -1,3 +1,5 @@
+'use client'
+
 import { epGroups, getURL, methods } from '@/app/utils/networkutils';
 import React, { useState, useEffect } from 'react';
 
@@ -8,6 +10,7 @@ export default function CreatePet() {
   useEffect(() => {
     getURL(epGroups.PETS, methods.FORM);
 
+    console.log(form);
   }, [])
   return (
     <div>
