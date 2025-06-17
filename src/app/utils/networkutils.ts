@@ -1,11 +1,14 @@
+import axios from "axios";
+
 const methods: { [key: string]: string } = {
   CREATE: 'create',
   READ: 'read',
   UPDATE: 'update',
   DELETE: 'delete',
 
-}
+  FORM: 'form',
 
+}s
 
 const epGroups: { [key: string]: string } = {
   PETS: 'Pets',
@@ -26,6 +29,10 @@ function getURL(group:string, method:string) {
   return url;
 
 };
+
+
+
+
 
 export {
   epGroups,
