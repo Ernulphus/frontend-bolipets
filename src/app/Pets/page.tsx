@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import style from './Pets.module.css';
  
-import { epGroups, getURL, methods } from '@/app/utils/networkutils';
+import { epGroups, getURL, methods, readPets } from '@/app/utils/networkutils';
 
 const PETS_READ_ENDPOINT = getURL(epGroups.PETS, methods.READ);
 const PETS_CREATE_ENDPOINT = getURL(epGroups.PETS, methods.CREATE);
@@ -146,14 +146,10 @@ interface petObject {
   [key: string]: Pet
 }
 
-function peopleObjectToArray(Data: petObject) {
+function petsObjectToArray(Data: petObject) {
   const keys = Object.keys(Data);
-  const people = keys.map((key) => Data[key]);
-  return people;
-}
-
-interface receivedData {
-  data: string
+  const pets = keys.map((key) => Data[key]);
+  return pets;
 }
 
 
@@ -165,10 +161,10 @@ function Pets() {
 
 
   const fetchPets = () => {
-    axios.get(PETS_READ_ENDPOINT)
+    readPets()
       .then(
-        ({ data }: receivedData) => { setPets(peopleObjectToArray(data)) }
-    )
+        (data) => { setPets(petsObjectToArray(data as petObject)) }
+      )
       .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
   };
 
@@ -199,6 +195,7 @@ function Pets() {
       {
       pets.map((pet) => 
         (<Pet
+          key={pet['_id']}
           petKey={pet['_id']}
           pet={pet}
           fetchPets={fetchPets}
