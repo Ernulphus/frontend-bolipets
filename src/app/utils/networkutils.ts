@@ -34,8 +34,15 @@ const readPets = () => {
     .then(({ data }) => resolve(data))
     .catch(reject);
   })
-    
-  };
+};
+
+const petsForm = () => {
+  return new Promise((resolve, reject) => {
+    axios.get(getURL(epGroups.PETS, methods.FORM))
+    .then(({ data }) => resolve(data))
+    .catch(reject);
+  })
+};
 
 
 export {
@@ -44,4 +51,5 @@ export {
   methods,
 
   readPets,
+  petsForm,
 }
