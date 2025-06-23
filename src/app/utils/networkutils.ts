@@ -44,6 +44,14 @@ const petsForm = () => {
   })
 };
 
+const deletePet = (_id: string) => {
+  return new Promise((resolve, reject) => {
+    axios.delete(`${epGroups.PETS}/${_id}`)
+      .then(resolve)
+      .catch(reject);
+  })
+}
+
 
 export {
   epGroups,
@@ -52,4 +60,5 @@ export {
 
   readPets,
   petsForm,
+  deletePet,
 }

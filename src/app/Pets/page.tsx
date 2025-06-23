@@ -99,11 +99,6 @@ function Pet(props: PetProps) {
    } = props;
   const { Name, color, eye, hunger, mood } = pet;
 
-  // const deletePet = () => {
-  //   axios.delete(`${PETS_READ_ENDPOINT}/${email}`)
-  //     .then(fetchPets)
-  // }
-
   return (
     <div key={key}>
       <div className={style.pet_container}>
