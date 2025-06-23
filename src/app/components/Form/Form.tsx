@@ -1,3 +1,4 @@
+import { strict } from "assert";
 import React from "react";
 
 function shortTextQuestion(
@@ -12,10 +13,24 @@ function shortTextQuestion(
   )
 }
 
-export default function Form() {
+interface questionObj {
+  fld_nm: string,
+  param_type: string,
+  question: string,
+  choices?: {[key: string]: string},
+}
+
+export default function Form(
+  questions: [questionObj],
+) {
   return (
     <form>
-      
+      {questions.map && questions.map((question: questionObj) => {
+        const q = question;
+        return (
+          <shortTextQuestion name={question.fld_nm} label={question.question}/>
+        )
+      })}
     </form>
   );
 }

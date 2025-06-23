@@ -2,6 +2,7 @@
 
 import { petsForm } from '@/app/utils/networkutils';
 import React, { useState, useEffect } from 'react';
+import Form from '@/app/components/Form/Form';
 
 export default function CreatePet() {
   const titleText = 'Your new Bolipet!'
@@ -17,6 +18,7 @@ export default function CreatePet() {
   return (
     <div>
       <h1>{titleText}</h1>
+      <Form questions={form} />
     </div>
   )
 }
