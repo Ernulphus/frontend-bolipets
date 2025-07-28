@@ -1,18 +1,17 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Link from "next/link";
 
 import style from './Pets.module.css';
  
 import { epGroups, getURL, methods, readPets } from '@/app/utils/networkutils';
 
-const PETS_READ_ENDPOINT = getURL(epGroups.PETS, methods.READ);
-const PETS_CREATE_ENDPOINT = getURL(epGroups.PETS, methods.CREATE);
+// const PETS_READ_ENDPOINT = getURL(epGroups.PETS, methods.READ);
+// const PETS_CREATE_ENDPOINT = getURL(epGroups.PETS, methods.CREATE);
 
-type HTMLINPUTEVENT = React.ChangeEvent<HTMLInputElement>;
-type HTMLSELECTEVENT = React.ChangeEvent<HTMLSelectElement>
+// type HTMLINPUTEVENT = React.ChangeEvent<HTMLInputElement>;
+// type HTMLSELECTEVENT = React.ChangeEvent<HTMLSelectElement>
 
 function ErrorMessage(props: ErrorMessageProps) {
   const { message } = props;
@@ -30,8 +29,6 @@ function Pet(props: PetProps) {
   const {
     petKey: key,
     pet,
-    fetchPets,
-    roleMap,
    } = props;
   const { Name, color, eye, hunger, mood } = pet;
 
@@ -99,7 +96,6 @@ function Pets() {
       .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
   };
 
-  const showAddPetForm = () => { setAddingPet(true); };
   const hideAddPetForm = () => { setAddingPet(false); };
 
   useEffect(fetchPets, []);
@@ -117,13 +113,6 @@ function Pets() {
           </button>
         </Link>
       </header>
-      <AddPetForm
-        visible={addingPet}
-        cancel={hideAddPetForm}
-        fetchPets={fetchPets}
-        setError={setError}
-        roleOptions={roleMap}
-      />
       {error && <ErrorMessage message={error} />}
       {
       pets.map((pet) => 
