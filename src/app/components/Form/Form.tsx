@@ -1,7 +1,7 @@
 import { strict } from "assert";
 import React from "react";
 
-function shortTextQuestion(
+function ShortTextQuestion(
   name='text',
   label='text_question',
 ) {
@@ -25,12 +25,15 @@ export default function Form(
 ) {
   return (
     <form>
-      {questions.map && questions.map((question: questionObj) => {
-        const q = question;
+      {questions.map && questions.map((q: questionObj) => {
         return (
-          <shortTextQuestion name={question.fld_nm} label={question.question}/>
+          <ShortTextQuestion name={q.fld_nm} label={q.question} />
         )
       })}
     </form>
   );
+}
+
+export type {
+  questionObj,
 }

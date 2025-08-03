@@ -2,7 +2,7 @@
 
 import { petsForm } from '@/app/utils/networkutils';
 import React, { useState, useEffect } from 'react';
-import Form from '@/app/components/Form/Form';
+import Form, { questionObj } from '@/app/components/Form/Form';
 
 export default function CreatePet() {
   const titleText = 'Your new Bolipet!'
@@ -10,7 +10,7 @@ export default function CreatePet() {
   
   useEffect(() => {
     petsForm()
-      .then((data) => setForm(data as {}));
+      .then((data) => setForm(data as [questionObj]));
 
   }, [])
 
