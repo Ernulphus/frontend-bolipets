@@ -6,7 +6,7 @@ import Form, { questionObj } from '@/app/components/Form/Form';
 
 export default function CreatePet() {
   const titleText = 'Your new Bolipet!'
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState();
   
   useEffect(() => {
     petsForm()
@@ -14,11 +14,11 @@ export default function CreatePet() {
 
   }, [])
 
-  console.log(form);
+  // console.log('form', form);
   return (
     <div>
       <h1>{titleText}</h1>
-      <Form questions={form} />
+      <Form questions={form.questions} />
     </div>
   )
 }
