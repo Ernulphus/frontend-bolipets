@@ -2,7 +2,7 @@ import { strict } from "assert";
 import React from "react";
 
 function ShortTextQuestion(props: any) {
-  console.log(props);
+  console.log('q props', props);
   return (
     <div>
       <label htmlFor={props.name}>{props.label}</label>
@@ -19,11 +19,12 @@ interface questionObj {
 }
 
 export default function Form(
-  questions: any,
+  questions: [questionObj],
 ) {
   console.log('questions', questions);
   return (
     <form>
+      <ShortTextQuestion props={questions[0]} />
       {questions.map && questions.map((q: questionObj) => {
         return (
           <ShortTextQuestion props={q} />
