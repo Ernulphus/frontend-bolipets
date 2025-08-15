@@ -16,7 +16,7 @@ export default function CreatePet() {
 
   console.log('form', form);
   return (
-    <div>
+    <div className="m-5">
       <h1>{titleText}</h1>
       <Form questions={form} />
     </div>
