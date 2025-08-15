@@ -100,7 +100,7 @@ function Pets() {
 
   useEffect(fetchPets, []);
 
-  console.log(pets);
+  // console.log(pets);
   return (
     <div className="wrapper">
       <header>

@@ -14,11 +14,11 @@ export default function CreatePet() {
 
   }, [])
 
-  // console.log('form', form);
+  console.log('form', form);
   return (
     <div>
       <h1>{titleText}</h1>
-      <Form questions={form as [questionObj]} />
+      <Form questions={form} />
     </div>
   )
 }

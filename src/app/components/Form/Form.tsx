@@ -1,12 +1,18 @@
 import { strict } from "assert";
 import React from "react";
 
-function ShortTextQuestion(props: any) {
-  console.log('q props', props);
+interface ShortTextQuestionProps {
+  question: string,
+  fld_name: string,
+  defaultText?: string | undefined,
+}
+
+function ShortTextQuestion({question, fld_name, defaultText}: ShortTextQuestionProps) {
+  console.log('q props', question, fld_name);
   return (
     <div>
-      <label htmlFor={props.name}>{props.label}</label>
-      <input type="text" name={props.name} />
+      <label htmlFor={fld_name}>{question}</label>
+      <input type="text" name={fld_name} />
     </div>
   )
 }
@@ -18,16 +24,17 @@ interface questionObj {
   choices?: {[key: string]: string},
 }
 
-export default function Form(
-  questions: [questionObj],
-) {
+interface FormProps {
+  questions: [questionObj] | undefined;
+}
+
+export default function Form({ questions }: FormProps) {
   console.log('questions', questions);
   return (
     <form>
-      <ShortTextQuestion props={questions[0]} />
-      {questions.map && questions.map((q: questionObj) => {
+      {questions && questions.map((q: questionObj) => {
         return (
-          <ShortTextQuestion props={q} />
+          <ShortTextQuestion fld_name={q.fld_nm} question={q.question} key={q.fld_nm} />
         )
       })}
     </form>
