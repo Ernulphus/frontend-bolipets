@@ -69,7 +69,7 @@ interface FormProps {
 export default function Form({ questions, onSubmit, images }: FormProps) {
 
   return (
-    <form>
+    <form className={styles.form}>
       {questions && questions.map((q: questionObj) => {
         switch (q.param_type) {
           case "radio":
@@ -88,7 +88,7 @@ export default function Form({ questions, onSubmit, images }: FormProps) {
               fld_name={q.fld_nm}
               question={q.question}
               key={q.fld_nm}
-              // images={images[q.fld_nm]}
+              images={images[q.fld_nm]}
             />
           )
         }
