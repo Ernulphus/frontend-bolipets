@@ -1,19 +1,38 @@
 import { strict } from "assert";
 import React from "react";
 
-interface ShortTextQuestionProps {
+interface QuestionProps {
   question: string,
   fld_name: string,
+}
+
+interface ShortTextQuestionProps extends QuestionProps {
   defaultText?: string | undefined,
 }
 
 function ShortTextQuestion({question, fld_name, defaultText}: ShortTextQuestionProps) {
-  console.log('q props', question, fld_name);
   return (
     <div>
       <label htmlFor={fld_name}>{question}</label>
       <input type="text" name={fld_name} />
     </div>
+  )
+}
+
+interface RadioQuestionProps extends QuestionProps {
+  choices: {[key: string]: string}
+}
+
+function RadioQuestion({question, fld_name, choices}: RadioQuestionProps) {
+  return (
+    <fieldset>
+      <legend>{question}</legend>
+      {Object.keys(choices).map((choice_key) => (
+        <input type="radio" id={choice_key} name={fld_name} value={choice_key}>
+          {choices[choice_key]}
+        </input>
+      ))}
+    </fieldset>
   )
 }
 
@@ -29,13 +48,29 @@ interface FormProps {
 }
 
 export default function Form({ questions }: FormProps) {
-  console.log('questions', questions);
   return (
     <form>
       {questions && questions.map((q: questionObj) => {
-        return (
-          <ShortTextQuestion fld_name={q.fld_nm} question={q.question} key={q.fld_nm} />
-        )
+        switch (q.param_type) {
+          case "radio": {
+            if (!q.choices) return;
+            return (
+              <RadioQuestion
+                fld_name={q.fld_nm}
+                question={q.question}
+                choices={q.choices}
+                key={q.fld_nm}
+              />
+            );
+          }
+          default: return (
+            <ShortTextQuestion
+              fld_name={q.fld_nm}
+              question={q.question}
+              key={q.fld_nm} 
+            />
+          )
+        }
       })}
     </form>
   );
