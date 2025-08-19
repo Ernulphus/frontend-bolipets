@@ -20,7 +20,7 @@ function ShortTextQuestion({question, fld_name, defaultText}: ShortTextQuestionP
 }
 
 interface RadioQuestionProps extends QuestionProps {
-  choices: {[key: string]: string}
+  choices: {[key: string]: {[key: string]: string}}
 }
 
 function RadioQuestion({question, fld_name, choices}: RadioQuestionProps) {
@@ -28,9 +28,18 @@ function RadioQuestion({question, fld_name, choices}: RadioQuestionProps) {
     <fieldset>
       <legend>{question}</legend>
       {Object.keys(choices).map((choice_key) => (
-        <input type="radio" id={choice_key} name={fld_name} value={choice_key}>
-          {choices[choice_key]}
-        </input>
+        <span>
+          <input
+            type="radio"
+            id={choice_key}
+            key={choice_key}
+            name={fld_name}
+            value={choice_key} 
+          />
+          <label>
+            {choices[choice_key]['description']}
+          </label>
+        </span>
       ))}
     </fieldset>
   )
@@ -40,7 +49,7 @@ interface questionObj {
   fld_nm: string,
   param_type: string,
   question: string,
-  choices?: {[key: string]: string},
+  choices?: {[key: string]: {[key: string]: string}},
 }
 
 interface FormProps {
@@ -52,8 +61,8 @@ export default function Form({ questions }: FormProps) {
     <form>
       {questions && questions.map((q: questionObj) => {
         switch (q.param_type) {
-          case "radio": {
-            if (!q.choices) return;
+          case "radio":
+            if (!q.choices) return (<div />);
             return (
               <RadioQuestion
                 fld_name={q.fld_nm}
@@ -62,7 +71,6 @@ export default function Form({ questions }: FormProps) {
                 key={q.fld_nm}
               />
             );
-          }
           default: return (
             <ShortTextQuestion
               fld_name={q.fld_nm}
