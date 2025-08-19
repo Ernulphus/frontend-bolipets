@@ -1,6 +1,6 @@
 'use client'
 
-import { petsForm } from '@/app/utils/networkutils';
+import { petsCreate, petsForm } from '@/app/utils/networkutils';
 import React, { useState, useEffect } from 'react';
 import Form, { questionObj } from '@/app/components/Form/Form';
 
@@ -14,11 +14,13 @@ export default function CreatePet() {
 
   }, [])
 
-  console.log('form', form);
   return (
     <div className="m-5">
       <h1>{titleText}</h1>
-      <Form questions={form} />
+      <Form
+        questions={form}
+        onSubmit={petsCreate}
+      />
     </div>
   )
 }

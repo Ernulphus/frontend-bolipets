@@ -8,6 +8,10 @@ const methods: { [key: string]: string } = {
 
   FORM: 'form',
 
+  GET: 'get',
+  POST: 'post',
+  PUT: 'put',
+
 }s
 
 const epGroups: { [key: string]: string } = {
@@ -28,12 +32,25 @@ function getURL(group:string, method:string) {
 
 };
 
-const readPets = () => {
+const petsCreateURL = getURL(epGroups.PETS, methods.CREATE);
+const petsCreate = (formData: FormData) => {
+  return new Promise((resolve, reject) => {
+    axios.post(petsCreateURL, formData, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(resolve)
+    .catch(reject);
+  });
+};
+
+const petsRead = () => {
   return new Promise((resolve, reject) => {
     axios.get(getURL(epGroups.PETS, methods.READ))
     .then(({ data }) => resolve(data))
     .catch(reject);
-  })
+  });
 };
 
 const petsForm = () => {
@@ -44,7 +61,7 @@ const petsForm = () => {
   })
 };
 
-const deletePet = (_id: string) => {
+const petsDelete = (_id: string) => {
   return new Promise((resolve, reject) => {
     axios.delete(`${epGroups.PETS}/${_id}`)
       .then(resolve)
@@ -58,7 +75,8 @@ export {
   getURL,
   methods,
 
-  readPets,
+  petsCreate,
+  petsRead,
   petsForm,
-  deletePet,
+  petsDelete,
 }

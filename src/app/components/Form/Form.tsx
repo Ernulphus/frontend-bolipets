@@ -28,11 +28,10 @@ function RadioQuestion({question, fld_name, choices}: RadioQuestionProps) {
     <fieldset>
       <legend>{question}</legend>
       {Object.keys(choices).map((choice_key) => (
-        <span>
+        <span className="flex flex-row" key={choice_key}>
           <input
             type="radio"
             id={choice_key}
-            key={choice_key}
             name={fld_name}
             value={choice_key} 
           />
@@ -54,9 +53,11 @@ interface questionObj {
 
 interface FormProps {
   questions: [questionObj] | undefined;
+  onSubmit: (formData: FormData) => void;
 }
 
-export default function Form({ questions }: FormProps) {
+export default function Form({ questions, onSubmit }: FormProps) {
+
   return (
     <form>
       {questions && questions.map((q: questionObj) => {
@@ -80,6 +81,10 @@ export default function Form({ questions }: FormProps) {
           )
         }
       })}
+      <input
+        type="submit"
+        formAction={onSubmit}
+      />
     </form>
   );
 }

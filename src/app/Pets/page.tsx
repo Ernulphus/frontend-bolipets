@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import style from './Pets.module.css';
  
-import { epGroups, getURL, methods, readPets } from '@/app/utils/networkutils';
+import { epGroups, getURL, methods, petsRead } from '@/app/utils/networkutils';
 
 // const PETS_READ_ENDPOINT = getURL(epGroups.PETS, methods.READ);
 // const PETS_CREATE_ENDPOINT = getURL(epGroups.PETS, methods.CREATE);
@@ -49,7 +49,6 @@ function Pet(props: PetProps) {
           Mood: {mood}
         </p>
       </div>
-      {/* <button onClick={deletePet}>Delete pet</button> */}
     </div>
   );
 }
@@ -89,7 +88,7 @@ function Pets() {
 
 
   const fetchPets = () => {
-    readPets()
+    petsRead()
       .then(
         (data) => { setPets(petsObjectToArray(data as petObject)) }
       )
