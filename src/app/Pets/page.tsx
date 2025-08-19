@@ -5,13 +5,8 @@ import Link from "next/link";
 
 import style from './Pets.module.css';
  
-import { epGroups, getURL, methods, petsRead } from '@/app/utils/networkutils';
-
-// const PETS_READ_ENDPOINT = getURL(epGroups.PETS, methods.READ);
-// const PETS_CREATE_ENDPOINT = getURL(epGroups.PETS, methods.CREATE);
-
-// type HTMLINPUTEVENT = React.ChangeEvent<HTMLInputElement>;
-// type HTMLSELECTEVENT = React.ChangeEvent<HTMLSelectElement>
+import { petsRead } from '@/app/utils/networkutils';
+import { images } from '../constants';
 
 function ErrorMessage(props: ErrorMessageProps) {
   const { message } = props;
@@ -30,11 +25,14 @@ function Pet(props: PetProps) {
     petKey: key,
     pet,
    } = props;
-  const { Name, color, eye, hunger, mood } = pet;
-
+  const { Name, color, eye, hunger, mood, species } = pet;
+  const petSpecies = species;
   return (
-    <div key={key}>
-      <div className={style.pet_container}>
+    <div key={key} className={style.pet_container} >
+      {species && 
+        <img src={images.species[petSpecies].src} alt={`${color} ${species}`} />
+      }
+      <div>
         <h2>{Name}</h2>
         <p>
           Color: {color}
@@ -59,6 +57,7 @@ interface Pet {
   eye: string,
   hunger: number
   mood: number,
+  species: string,
   _id: string,
 }
 
@@ -66,7 +65,6 @@ interface PetProps {
   petKey?: string,
   pet: Pet,
   fetchPets: () => void,
-  roleMap: { [key: string]: string }
 }
 
 interface petObject {
@@ -83,9 +81,6 @@ function petsObjectToArray(Data: petObject) {
 function Pets() {
   const [error, setError] = useState('');
   const [pets, setPets] = useState([] as Pet[]);
-  const [addingPet, setAddingPet] = useState(false);
-  const [roleMap, setRoleMap] = useState({});
-
 
   const fetchPets = () => {
     petsRead()
@@ -94,8 +89,6 @@ function Pets() {
       )
       .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
   };
-
-  const hideAddPetForm = () => { setAddingPet(false); };
 
   useEffect(fetchPets, []);
 
@@ -119,7 +112,6 @@ function Pets() {
           petKey={pet['_id']}
           pet={pet}
           fetchPets={fetchPets}
-          roleMap={roleMap}
         />)
       )
       }

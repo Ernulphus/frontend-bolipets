@@ -6,6 +6,7 @@
   outline: 1px solid black;
   aspect-ratio: 1 / 1;
   width: 10rem;
+  border-radius: 5px;
 }
 
 .form > * {
