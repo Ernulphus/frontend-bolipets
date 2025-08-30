@@ -1,7 +1,10 @@
 import { strict } from "assert";
 import { StaticImageData } from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import styles from './Form.module.css';
+
+import Wheel from "@uiw/react-color-wheel";
+import { hsvaToHex } from "@uiw/color-convert"
 
 interface QuestionProps {
   question: string,
@@ -53,6 +56,22 @@ function RadioQuestion({question, fld_name, images, choices}: RadioQuestionProps
   )
 }
 
+// interface ColorWheelProps extends QuestionProps {
+
+// }
+
+function ColorWheelQuestion({ question, fld_name }: QuestionProps) {
+  const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
+
+  return (
+    <fieldset>
+      <label htmlFor={fld_name}>{question}</label>
+      <Wheel color={hsva} onChange={(color) => setHsva({ ...hsva, ...color.hsva })} />
+      <input type="text" readOnly value={hsvaToHex(hsva)}/>
+    </fieldset>
+  );
+}
+
 interface questionObj {
   fld_nm: string,
   param_type: string,
@@ -83,6 +102,15 @@ export default function Form({ questions, onSubmit, images }: FormProps) {
                 images={images[q.fld_nm]}
               />
             );
+          case "color_wheel":
+            return (
+              <ColorWheelQuestion
+                fld_name={q.fld_nm}
+                question={q.question}
+                key={q.fld_nm}
+                images={images[q.fld_nm]}
+              />
+            )
           default: return (
             <ShortTextQuestion
               fld_name={q.fld_nm}
