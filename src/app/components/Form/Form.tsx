@@ -67,7 +67,12 @@ function ColorWheelQuestion({ question, fld_name }: QuestionProps) {
     <fieldset>
       <label htmlFor={fld_name}>{question}</label>
       <Wheel color={hsva} onChange={(color) => setHsva({ ...hsva, ...color.hsva })} />
-      <input type="text" readOnly value={hsvaToHex(hsva)}/>
+      <input
+        type="text"
+        readOnly
+        value={hsvaToHex(hsva)}
+        style={{borderColor: hsvaToHex(hsva)}}
+      />
     </fieldset>
   );
 }
