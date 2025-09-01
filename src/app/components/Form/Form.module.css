@@ -13,11 +13,15 @@
   padding-bottom: 5rem;
 }
 
-.color_wheel img {
-  mask: repeating-radial-gradient(
-      circle,
-      transparent 0 5px,
-      lightgreen 15px 20px
-    )
-    content-box border-box 0% 0% / 100px 100px repeat;
+.pet_preview div {
+  background-color: purple;
+  mask-image: url('../PetImages/marth.png');
+  mask-mode: alpha;
+}
+
+.pet_preview img,
+.pet_preview div {
+  box-sizing: content-box;
+  padding: 20px;
+  aspect-ratio: 1;
 }

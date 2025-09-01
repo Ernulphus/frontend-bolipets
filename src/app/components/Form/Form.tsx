@@ -73,10 +73,12 @@ function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
         value={hsvaToHex(hsva)}
         style={{borderColor: hsvaToHex(hsva)}}
       />
-      <img
-        src={images['bingus'].src}
-
-      />
+      <div className={styles.pet_preview}>
+        <div />
+        <img
+          src={images['bingus'].src}
+        />
+      </div>
     </fieldset>
   );
 }
