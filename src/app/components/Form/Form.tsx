@@ -74,9 +74,9 @@ function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
         style={{borderColor: hsvaToHex(hsva)}}
       />
       <div className={styles.pet_preview}>
-        <div />
+        <div style={{backgroundColor: hsvaToHex(hsva)}}/>
         <img
-          src={images['bingus'].src}
+          src={images['marth_transparent'].src}
         />
       </div>
     </fieldset>

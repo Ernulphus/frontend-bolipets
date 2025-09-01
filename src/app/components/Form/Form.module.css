@@ -17,11 +17,20 @@
   background-color: purple;
   mask-image: url('../PetImages/marth.png');
   mask-mode: alpha;
+  mask-size: contain;
+  z-index: -1;
 }
 
 .pet_preview img,
 .pet_preview div {
-  box-sizing: content-box;
+  box-sizing: border-box;
   padding: 20px;
   aspect-ratio: 1;
+  width: 30rem;
+  padding: 0;
+}
+
+.pet_preview img {
+  position: relative;
+  top: -30rem;
 }
