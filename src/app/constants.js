@@ -19,6 +19,16 @@ const images = {
     'missingno': Missingno,
     'trilobite': Trilobite,
   },
+  color: {
+    'glorpimus': Glorpimus,
+    'bingus': Bingus,
+    'jerma': Jerma,
+    'jinx': Jinx,
+    'marble': Marble,
+    'marth': Marth,
+    'missingno': Missingno,
+    'trilobite': Trilobite,
+  },
 };
 
 export {

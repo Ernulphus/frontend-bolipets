@@ -12,3 +12,12 @@
 .form > * {
   padding-bottom: 5rem;
 }
+
+.color_wheel img {
+  mask: repeating-radial-gradient(
+      circle,
+      transparent 0 5px,
+      lightgreen 15px 20px
+    )
+    content-box border-box 0% 0% / 100px 100px repeat;
+}

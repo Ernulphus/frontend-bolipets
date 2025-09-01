@@ -60,11 +60,11 @@ function RadioQuestion({question, fld_name, images, choices}: RadioQuestionProps
 
 // }
 
-function ColorWheelQuestion({ question, fld_name }: QuestionProps) {
+function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
 
   return (
-    <fieldset>
+    <fieldset className={styles.color_wheel}>
       <label htmlFor={fld_name}>{question}</label>
       <Wheel color={hsva} onChange={(color) => setHsva({ ...hsva, ...color.hsva })} />
       <input
@@ -72,6 +72,10 @@ function ColorWheelQuestion({ question, fld_name }: QuestionProps) {
         readOnly
         value={hsvaToHex(hsva)}
         style={{borderColor: hsvaToHex(hsva)}}
+      />
+      <img
+        src={images['bingus'].src}
+
       />
     </fieldset>
   );
