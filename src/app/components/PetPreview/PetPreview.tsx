@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Form.module.css';
+import styles from './PetPreview.module.css';
 import { StaticImageData } from 'next/image';
 
 interface PetPreviewProps {

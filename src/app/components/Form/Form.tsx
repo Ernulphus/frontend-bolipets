@@ -1,10 +1,12 @@
 import { strict } from "assert";
 import { StaticImageData } from "next/image";
 import React, { useState } from "react";
-import styles from './Form.module.css';
 
 import Wheel from "@uiw/react-color-wheel";
 import { hsvaToHex } from "@uiw/color-convert"
+
+import PetPreview from '@/app/components/PetPreview/PetPreview';
+import styles from './Form.module.css';
 
 interface QuestionProps {
   question: string,
@@ -75,12 +77,7 @@ function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
         value={hsvaToHex(hsva)}
         style={{borderColor: hsvaToHex(hsva)}}
       />
-      <div className={styles.pet_preview}>
-        <div style={{backgroundColor: hsvaToHex(hsva)}}/>
-        <img
-          src={images['marth_transparent'].src}
-        />
-      </div>
+      <PetPreview color={hsvaToHex(hsva)} image={images['marth_transparent']} />
     </fieldset>
   );
 }
