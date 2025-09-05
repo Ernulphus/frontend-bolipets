@@ -69,6 +69,8 @@ function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
       <Wheel color={hsva} onChange={(color) => setHsva({ ...hsva, ...color.hsva })} />
       <input
         type="text"
+        id={fld_name}
+        name={fld_name}
         readOnly
         value={hsvaToHex(hsva)}
         style={{borderColor: hsvaToHex(hsva)}}
