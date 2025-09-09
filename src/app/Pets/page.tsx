@@ -7,6 +7,7 @@ import style from './Pets.module.css';
  
 import { petsRead } from '@/app/utils/networkutils';
 import { images } from '../constants';
+import PetPreview from '../components/PetPreview/PetPreview';
 
 function ErrorMessage(props: ErrorMessageProps) {
   const { message } = props;
@@ -30,7 +31,7 @@ function Pet(props: PetProps) {
   return (
     <div key={key} className={style.pet_container} >
       {species && 
-        <img src={images.species[petSpecies].src} alt={`${color} ${species}`} />
+        <PetPreview color={color} image={images.species[petSpecies]} />
       }
       <div>
         <h2>{Name}</h2>
