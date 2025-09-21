@@ -1,4 +1,3 @@
-import { strict } from "assert";
 import { StaticImageData } from "next/image";
 import React, { useState } from "react";
 
@@ -22,7 +21,7 @@ function ShortTextQuestion({question, fld_name, defaultText}: ShortTextQuestionP
   return (
     <div>
       <label htmlFor={fld_name}>{question}</label>
-      <input type="text" name={fld_name} />
+      <input type="text" name={fld_name} value={defaultText} />
     </div>
   )
 }
