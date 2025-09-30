@@ -1,6 +1,6 @@
 .pet_preview div {
   background-color: purple;
-  mask-image: url('../PetImages/marth.png');
+  /* mask-image: url('../PetImages/esquardo/esquardo.png'); */
   mask-mode: alpha;
   mask-size: contain;
   z-index: -1;

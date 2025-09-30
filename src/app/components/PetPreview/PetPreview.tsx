@@ -8,11 +8,14 @@ interface PetPreviewProps {
 }
 
 export default function PetPreview({color, pet}: PetPreviewProps) {
+  const defaultImageURL = `url('/PetImages/${pet}/${pet}.png')`
+
   return (
     <div className={styles.pet_preview}>
       <div style={{
         backgroundColor: color,
-        maskImage: `url('../PetImages/${pet}.png')`
+        maskImage: defaultImageURL,
+        WebkitMaskImage: defaultImageURL,
       }}/>
       <img
         src={pet_images[pet].TRANSPARENT.src}
