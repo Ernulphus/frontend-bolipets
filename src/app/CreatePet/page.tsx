@@ -4,7 +4,7 @@ import { petsCreate, petsForm } from '@/app/utils/networkutils';
 import React, { useState, useEffect } from 'react';
 import Form, { questionObj } from '@/app/components/Form/Form';
 
-import { images } from '../constants';
+import { pet_images } from '../constants';
 
 export default function CreatePet() {
   const titleText = 'Your new Bolipet!'
@@ -22,7 +22,7 @@ export default function CreatePet() {
       <Form
         questions={form}
         onSubmit={petsCreate}
-        images={images}
+        images={pet_images}
       />
     </div>
   )

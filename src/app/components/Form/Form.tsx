@@ -76,7 +76,7 @@ function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
         value={hsvaToHex(hsva)}
         style={{borderColor: hsvaToHex(hsva)}}
       />
-      <PetPreview color={hsvaToHex(hsva)} image={images['marth_transparent']} />
+      <PetPreview color={hsvaToHex(hsva)} pet='esquardo' />
     </fieldset>
   );
 }
