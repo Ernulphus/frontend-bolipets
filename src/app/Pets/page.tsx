@@ -6,7 +6,7 @@ import Link from "next/link";
 import style from './Pets.module.css';
  
 import { petsRead } from '@/app/utils/networkutils';
-import { images } from '../constants';
+import { pet_images } from '../constants';
 import PetPreview from '../components/PetPreview/PetPreview';
 
 function ErrorMessage(props: ErrorMessageProps) {
@@ -30,8 +30,8 @@ function Pet(props: PetProps) {
   const petSpecies = species;
   return (
     <div key={key} className={style.pet_container} >
-      {species && 
-        <PetPreview color={color} image={images.species[petSpecies]} />
+      {species in pet_images && 
+        <PetPreview color={color} pet={petSpecies} />
       }
       <div>
         <h2>{Name}</h2>
@@ -58,7 +58,7 @@ interface Pet {
   eye: string,
   hunger: number
   mood: number,
-  species: string,
+  species: keyof typeof pet_images,
   _id: string,
 }
 
