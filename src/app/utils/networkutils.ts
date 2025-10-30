@@ -12,13 +12,12 @@ const methods: { [key: string]: string } = {
   POST: 'post',
   PUT: 'put',
 
-}s
+};
 
 const epGroups: { [key: string]: string } = {
   PETS: 'Pets',
   USERS: 'Users',
-
-}
+};
 
 const BACKEND_URL = (process.env.NEXT_PUBLIC_URL_PRE || 'http://127.0.0.1:8000');
 

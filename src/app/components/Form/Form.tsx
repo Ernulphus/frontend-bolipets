@@ -10,8 +10,8 @@ interface QuestionProps {
   question: string,
   fld_name: string,
   images: {[key: string]: StaticImageData};
+  form: [questionObj] | undefined;
   setForm: Dispatch<[questionObj] | undefined>;
-
 }
 
 interface ShortTextQuestionProps extends QuestionProps {
@@ -31,7 +31,7 @@ interface RadioQuestionProps extends QuestionProps {
   choices: {[key: string]: {[key: string]: string}}
 }
 
-function RadioQuestion({question, fld_name, images, choices}: RadioQuestionProps) {
+function RadioQuestion({question, fld_name, images, choices, form, setForm}: RadioQuestionProps) {
   return (
     <fieldset className={styles.radio_question}>
       <legend>{question}</legend>
@@ -44,7 +44,8 @@ function RadioQuestion({question, fld_name, images, choices}: RadioQuestionProps
             type="radio"
             id={choice_key}
             name={fld_name}
-            value={choice_key} 
+            value={choice_key}
+            onChange={() => setQuestionValue(form, setForm, fld_name, choice_key)}
           />
           <label htmlFor={choice_key}>
             {choices[choice_key]['description']}
@@ -62,13 +63,17 @@ function RadioQuestion({question, fld_name, images, choices}: RadioQuestionProps
 
 // }
 
-function ColorWheelQuestion({ question, fld_name, images, setForm }: QuestionProps) {
+function ColorWheelQuestion({ question, fld_name, form, setForm }: QuestionProps) {
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
 
   return (
     <fieldset className={styles.color_wheel}>
       <label htmlFor={fld_name}>{question}</label>
-      <Wheel color={hsva} onChange={(color) => setHsva({ ...hsva, ...color.hsva })} />
+      <Wheel color={hsva} onChange={(color) => {
+        const newhsva = { ...hsva, ...color.hsva }
+        setHsva(newhsva);
+        setQuestionValue(form, setForm, fld_name, hsvaToHex(newhsva));
+        }} />
       <input
         type="text"
         id={fld_name}
@@ -111,6 +116,7 @@ export default function Form({ questions, onSubmit, images, setForm }: FormProps
                 choices={q.choices}
                 key={q.fld_nm}
                 images={images[q.fld_nm]}
+                form={questions}
                 setForm={setForm}
               />
             );
@@ -121,6 +127,7 @@ export default function Form({ questions, onSubmit, images, setForm }: FormProps
                 question={q.question}
                 key={q.fld_nm}
                 images={images[q.fld_nm]}
+                form={questions}
                 setForm={setForm}
               />
             )
@@ -130,8 +137,8 @@ export default function Form({ questions, onSubmit, images, setForm }: FormProps
               question={q.question}
               key={q.fld_nm}
               images={images[q.fld_nm]}
+              form={questions}
               setForm={setForm}
-
             />
           )
         }
@@ -142,6 +149,39 @@ export default function Form({ questions, onSubmit, images, setForm }: FormProps
       />
     </form>
   );
+}
+
+interface qsObj {
+  [key: string]: questionObj,
+}
+
+const questionsListToObj = (questions: [questionObj]) => {
+  const qObj: qsObj = {};
+  questions.forEach((q) => qObj[q['fld_nm']] = q);
+  return qObj;
+};
+
+export function getQuestionValue(form: [questionObj] | undefined, fld_nm: string) {
+  if (!fld_nm || !form) return;
+  const filtered = form.filter(q => q['fld_nm'] == fld_nm);
+  if (filtered.length > 0) return filtered[0]['value'];
+  return undefined;
+}
+
+function setQuestionValue(
+  form: [questionObj] | undefined,
+  setForm: Dispatch<[questionObj] | undefined>,
+  fld_nm: string,
+  value: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+) {
+  if (!form) return undefined;
+  form.forEach(q => {
+    if (q['fld_nm'] == fld_nm) {
+      q['value'] = value;
+    }
+  });
+  setForm([...form]);
+  return form;
 }
 
 export type {
