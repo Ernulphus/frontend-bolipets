@@ -3,7 +3,7 @@ import styles from './PetPreview.module.css';
 import { pet_images } from '@/app/constants';
 
 interface PetPreviewProps {
-  color: string,
+  color: string | undefined,
   pet: keyof typeof pet_images,
 }
 

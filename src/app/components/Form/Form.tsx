@@ -1,16 +1,17 @@
 import { StaticImageData } from "next/image";
-import React, { useState } from "react";
+import React, { useState, Dispatch } from "react";
 
 import Wheel from "@uiw/react-color-wheel";
 import { hsvaToHex } from "@uiw/color-convert"
 
-import PetPreview from '@/app/components/PetPreview/PetPreview';
 import styles from './Form.module.css';
 
 interface QuestionProps {
   question: string,
   fld_name: string,
   images: {[key: string]: StaticImageData};
+  setForm: Dispatch<[questionObj] | undefined>;
+
 }
 
 interface ShortTextQuestionProps extends QuestionProps {
@@ -61,7 +62,7 @@ function RadioQuestion({question, fld_name, images, choices}: RadioQuestionProps
 
 // }
 
-function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
+function ColorWheelQuestion({ question, fld_name, images, setForm }: QuestionProps) {
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
 
   return (
@@ -76,7 +77,6 @@ function ColorWheelQuestion({ question, fld_name, images }: QuestionProps) {
         value={hsvaToHex(hsva)}
         style={{borderColor: hsvaToHex(hsva)}}
       />
-      <PetPreview color={hsvaToHex(hsva)} pet='esquardo' />
     </fieldset>
   );
 }
@@ -86,15 +86,17 @@ interface questionObj {
   param_type: string,
   question: string,
   choices?: {[key: string]: {[key: string]: string}},
+  value: string | undefined,
 }
 
 interface FormProps {
   questions: [questionObj] | undefined;
   onSubmit: (formData: FormData) => void;
   images: {[key: string]: {[key: string]: StaticImageData}};
+  setForm: Dispatch<[questionObj] | undefined>;
 }
 
-export default function Form({ questions, onSubmit, images }: FormProps) {
+export default function Form({ questions, onSubmit, images, setForm }: FormProps) {
 
   return (
     <form className={styles.form}>
@@ -109,6 +111,7 @@ export default function Form({ questions, onSubmit, images }: FormProps) {
                 choices={q.choices}
                 key={q.fld_nm}
                 images={images[q.fld_nm]}
+                setForm={setForm}
               />
             );
           case "color_wheel":
@@ -118,6 +121,7 @@ export default function Form({ questions, onSubmit, images }: FormProps) {
                 question={q.question}
                 key={q.fld_nm}
                 images={images[q.fld_nm]}
+                setForm={setForm}
               />
             )
           default: return (
@@ -126,6 +130,8 @@ export default function Form({ questions, onSubmit, images }: FormProps) {
               question={q.question}
               key={q.fld_nm}
               images={images[q.fld_nm]}
+              setForm={setForm}
+
             />
           )
         }
