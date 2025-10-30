@@ -2,12 +2,15 @@ import React from 'react';
 import styles from './PetPreview.module.css';
 import { pet_images } from '@/app/constants';
 
-interface PetPreviewProps {
+type petImages = typeof pet_images;
+
+interface PetPreviewProps <K extends keyof petImages> {
   color: string | undefined,
-  pet: keyof typeof pet_images | undefined,
+  pet: K | undefined,
 }
 
-export default function PetPreview({color, pet}: PetPreviewProps) {
+
+export default function PetPreview<K extends keyof petImages>({color, pet}: PetPreviewProps<K>) {
   console.log('In petpreview', color, pet);
   const defaultImageURL = `url('/PetImages/${pet}/${pet}.png')`
   if (!pet) return;

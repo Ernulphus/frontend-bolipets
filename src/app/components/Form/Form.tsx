@@ -151,16 +151,6 @@ export default function Form({ questions, onSubmit, images, setForm }: FormProps
   );
 }
 
-interface qsObj {
-  [key: string]: questionObj,
-}
-
-const questionsListToObj = (questions: [questionObj]) => {
-  const qObj: qsObj = {};
-  questions.forEach((q) => qObj[q['fld_nm']] = q);
-  return qObj;
-};
-
 export function getQuestionValue(form: [questionObj] | undefined, fld_nm: string) {
   if (!fld_nm || !form) return;
   const filtered = form.filter(q => q['fld_nm'] == fld_nm);

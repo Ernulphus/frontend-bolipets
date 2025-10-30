@@ -9,7 +9,7 @@ const pet_images = {
     DEFAULT: Esquardo,
     TRANSPARENT: Esquardo_,
   }
-};
+} as const;
 
 export {
   pet_images,

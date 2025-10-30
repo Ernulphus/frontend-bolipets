@@ -7,8 +7,6 @@ import PetPreview from '@/app/components/PetPreview/PetPreview';
 
 import { pet_images } from '../constants';
 
-
-
 export default function CreatePet() {
   const titleText = 'Your new Bolipet!'
   const [form, setForm] = useState<[questionObj] | undefined>();
@@ -17,7 +15,6 @@ export default function CreatePet() {
     petsForm()
       .then((data) => setForm(data as any)); // eslint-disable-line @typescript-eslint/no-explicit-any
   }, [])
-  console.log(form);
   return (
     <div className="m-5">
       <h1>{titleText}</h1>
@@ -29,7 +26,7 @@ export default function CreatePet() {
       />
       <PetPreview
         color={getQuestionValue(form, 'color')}
-        pet={getQuestionValue(form, 'species')} 
+        pet={getQuestionValue(form, 'species') as keyof typeof pet_images} 
       />
 
     </div>
