@@ -11,7 +11,6 @@ interface PetPreviewProps <K extends keyof petImages> {
 
 
 export default function PetPreview<K extends keyof petImages>({color, pet}: PetPreviewProps<K>) {
-  console.log('In petpreview', color, pet);
   const defaultImageURL = `url('/PetImages/${pet}/${pet}.png')`
   if (!pet) return;
   return (
