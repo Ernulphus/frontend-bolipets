@@ -10,5 +10,17 @@
 }
 
 .form > * {
-  padding-bottom: 5rem;
+  margin-bottom: 2.5rem;
+}
+
+.submit_button {
+  transition: background-color 0.5s;
+}
+
+.submit_button:hover {
+  background-color: lightcyan;
+}
+
+.submit_button:active {
+  outline-color: black;
 }

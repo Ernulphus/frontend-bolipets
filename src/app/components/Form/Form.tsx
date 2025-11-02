@@ -37,7 +37,7 @@ function RadioQuestion({question, fld_name, images, choices, form, setForm}: Rad
       <legend>{question}</legend>
       {Object.keys(choices).map((choice_key) => (
         <span
-          className="flex flex-row items-center mt-5"
+          className="flex flex-row items-center mt-2"
           key={choice_key}
         >
           <input
@@ -144,6 +144,7 @@ export default function Form({ questions, onSubmit, images, setForm }: FormProps
         }
       })}
       <input
+        className={styles.submit_button}
         type="submit"
         formAction={onSubmit}
       />
