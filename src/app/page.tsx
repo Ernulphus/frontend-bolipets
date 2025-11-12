@@ -1,16 +1,10 @@
-import { auth0 } from "../lib/auth0"; // Adjust path if your auth0 client is elsewhere
+import { auth0 } from "../lib/auth0";
+import StrangerRedirect from '../lib/StrangerRedirect';
 
 export default async function Home() {
-  const session = await auth0.getSession();
-
-  if (!session) {
-    return (
-      <main>
-        <a href="/auth/login?screen_hint=signup">Sign up</a>
-        <a href="/auth/login">Log in</a>
-      </main>
-    );
-  }
+  const session = await auth0.getSession()
+  const res = await StrangerRedirect(session)
+  if (res) return res;
 
   return (
     <main>
