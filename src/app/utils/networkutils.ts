@@ -29,7 +29,7 @@ function getURL(group:string, method:string, queryObj:object | null) {
   const queryString = queryObjToString(queryObj);
   
 
-  const url = `${BACKEND_URL}/${group}/${method}`
+  const url = `${BACKEND_URL}/${group}/${method}${queryString}`
   return url;
 
 };

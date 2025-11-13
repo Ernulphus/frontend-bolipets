@@ -98,6 +98,7 @@ export default async function Pets() {
       )
       .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
   };
+  console.log(session.accessTokens)
 
   useEffect(fetchPets, []);
 
