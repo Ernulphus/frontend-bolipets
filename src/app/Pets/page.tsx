@@ -9,6 +9,9 @@ import { petsRead } from '@/app/utils/networkutils';
 import { pet_images } from '../constants';
 import PetPreview from '../components/PetPreview/PetPreview';
 
+import { auth0 } from '@/lib/auth0';
+import StrangerRedirect from '@/lib/StrangerRedirect';
+
 function ErrorMessage(props: ErrorMessageProps) {
   const { message } = props;
   return (
@@ -79,12 +82,17 @@ function petsObjectToArray(Data: petObject) {
 }
 
 
-function Pets() {
+export default async function Pets() {
+  const session = await auth0.getSession()
+  const res = await StrangerRedirect(session)
+  if (res) return res;
+  if (!session) return res;
+
   const [error, setError] = useState('');
   const [pets, setPets] = useState([] as Pet[]);
 
   const fetchPets = () => {
-    petsRead()
+    petsRead(session)
       .then(
         (data) => { setPets(petsObjectToArray(data as petObject)) }
       )
@@ -119,5 +127,3 @@ function Pets() {
     </div>
   );
 }
-
-export default Pets;
