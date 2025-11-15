@@ -10,7 +10,8 @@ import { pet_images } from '../constants';
 import PetPreview from '../components/PetPreview/PetPreview';
 
 import { auth0 } from '@/lib/auth0';
-import StrangerRedirect from '@/lib/StrangerRedirect';
+import LoginSignup from '@/lib/LoginSignup';
+import { SessionData } from '@auth0/nextjs-auth0/types';
 
 function ErrorMessage(props: ErrorMessageProps) {
   const { message } = props;
@@ -82,25 +83,32 @@ function petsObjectToArray(Data: petObject) {
 }
 
 
-export default async function Pets() {
-  const session = await auth0.getSession()
-  const res = await StrangerRedirect(session)
-  if (res) return res;
-  if (!session) return res;
-
+export default function Pets() {
   const [error, setError] = useState('');
   const [pets, setPets] = useState([] as Pet[]);
-
+  const [session, setSession] = useState<SessionData | undefined>()
+  
   const fetchPets = () => {
     petsRead(session)
-      .then(
-        (data) => { setPets(petsObjectToArray(data as petObject)) }
-      )
-      .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
+    .then(
+      (data) => { setPets(petsObjectToArray(data as petObject)) }
+    )
+    .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
   };
-  console.log(session.accessTokens)
+  
+  useEffect(fetchPets, [session]);
 
-  useEffect(fetchPets, []);
+  if (session) {console.log(session.accessTokens)}
+
+  auth0.getSession()
+    .then((sesh) => {
+      if (sesh == null) {setSession(undefined)}
+      else {setSession(sesh)};
+    });
+  if (!session) return (
+    <LoginSignup />
+  );
+
 
   return (
     <div className="wrapper">

@@ -5,31 +5,36 @@ import React, { useState, useEffect } from 'react';
 import Form, { questionObj, getQuestionValue } from '@/app/components/Form/Form';
 import PetPreview from '@/app/components/PetPreview/PetPreview';
 import { auth0 } from '@/lib/auth0';
-import StrangerRedirect from '@/lib/StrangerRedirect';
+import LoginSignup from '@/lib/LoginSignup';
+import { SessionData } from '@auth0/nextjs-auth0/types';
 
 import { pet_images } from '../constants';
 
-export default async function CreatePet() {
-  const session = await auth0.getSession()
-  const res = await StrangerRedirect(session)
-  if (res) return res;
-  if (!session) return res;
-  
-  const titleText = 'Your new Bolipet!'
+export default function CreatePet() {
   const [form, setForm] = useState<[questionObj] | undefined>();
+  const [session, setSession] = useState<SessionData | null | undefined>()
+
+  useEffect(() => {
+    petsForm()
+    .then((data) => setForm(data as any)); // eslint-disable-line @typescript-eslint/no-explicit-any
+  }, [])
+  
+  auth0.getSession()
+    .then(setSession);
+  if (!session) return (
+    <LoginSignup />
+  );
   
   const submitPet = (formData: FormData) => {
-    return {
+    const newPet = {
       email: session.user.email,
       name: session.user.name,
       ...formData,
     };
+    petsCreate(newPet);
   }
-
-  useEffect(() => {
-    petsForm()
-      .then((data) => setForm(data as any)); // eslint-disable-line @typescript-eslint/no-explicit-any
-  }, [])
+  const titleText = 'Your new Bolipet!'
+  
   return (
     <div className="m-5 flex flex-col items-center">
       <div>
