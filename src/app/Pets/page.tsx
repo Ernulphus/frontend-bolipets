@@ -96,12 +96,14 @@ export default function Pets() {
     .catch((error: string) => setError(`There was a problem retrieving the list of people. ${error}`));
   };
   
-  useEffect(fetchPets, [session]);
+  useEffect(() => {
+    auth0.getSession()
+      .then(setSession);
+    fetchPets()
+  }, [session]);
 
   if (session) {console.log(session.accessTokens)}
 
-  auth0.getSession()
-    .then(setSession);
   if (!session) return (
     <LoginSignup />
   );

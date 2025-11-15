@@ -1,6 +1,6 @@
 import React from "react";
 
-export default async function LoginSignup() {  
+export default function LoginSignup() {  
   return (
     <main>
       <a href="/auth/login?screen_hint=signup">Sign up</a>
