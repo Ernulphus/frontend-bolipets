@@ -12,15 +12,15 @@ import { pet_images } from '../constants';
 
 export default function CreatePet() {
   const [form, setForm] = useState<[questionObj] | undefined>();
-  const [session, setSession] = useState<SessionData | null | undefined>()
+  const [session, setSession] = useState<SessionData | null>(null)
 
   useEffect(() => {
+    auth0.getSession()
+      .then(setSession);
     petsForm()
     .then((data) => setForm(data as any)); // eslint-disable-line @typescript-eslint/no-explicit-any
-  }, [])
+  }, []);
   
-  auth0.getSession()
-    .then(setSession);
   if (!session) return (
     <LoginSignup />
   );

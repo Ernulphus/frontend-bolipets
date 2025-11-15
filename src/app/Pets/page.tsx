@@ -86,7 +86,7 @@ function petsObjectToArray(Data: petObject) {
 export default function Pets() {
   const [error, setError] = useState('');
   const [pets, setPets] = useState([] as Pet[]);
-  const [session, setSession] = useState<SessionData | undefined>()
+  const [session, setSession] = useState<SessionData | null>(null)
   
   const fetchPets = () => {
     petsRead(session)
@@ -101,10 +101,7 @@ export default function Pets() {
   if (session) {console.log(session.accessTokens)}
 
   auth0.getSession()
-    .then((sesh) => {
-      if (sesh == null) {setSession(undefined)}
-      else {setSession(sesh)};
-    });
+    .then(setSession);
   if (!session) return (
     <LoginSignup />
   );

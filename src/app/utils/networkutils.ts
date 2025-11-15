@@ -22,7 +22,7 @@ const epGroups: { [key: string]: string } = {
 
 const BACKEND_URL = (process.env.NEXT_PUBLIC_URL_PRE || 'http://127.0.0.1:8000');
 
-function getURL(group:string, method:string, queryObj?:object) {
+function getURL(group:string, method:string, queryObj?:object | null) {
   if (!BACKEND_URL) throw new Error('No base URL');
   if (!Object.values(epGroups).includes(group)) throw new Error('Endpoint group not found');
   if (!Object.values(methods).includes(method)) throw new Error('Invalid method');
@@ -56,7 +56,7 @@ const petsCreate = (formData: FormData) => {
   });
 };
 
-const petsRead = (session: SessionData | undefined) => {
+const petsRead = (session: SessionData | null) => {
   return new Promise((resolve, reject) => {
     axios.get(getURL(epGroups.PETS, methods.READ, session))
     .then(({ data }) => resolve(data))
